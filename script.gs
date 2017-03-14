@@ -31,10 +31,12 @@ function onOpen() {
       
 function deleteSheets() {
   var deleteSheetsContaining = Browser.inputBox("Delete sheets with names containing:"); 
+   deleteSheetsContaining = deleteSheetsContaining.toLowerCase();
     if (sheetMatch(deleteSheetsContaining)){
       for (var i = 0; i < sheetsCount; i++){
         var sheet = sheets[i]; 
         var sheetName = sheet.getName();
+          sheetName = sheetName.toLowerCase();
         Logger.log(sheetName);
       if (sheetName.indexOf(deleteSheetsContaining.toString()) !== -1){
         Logger.log("DELETE!");
