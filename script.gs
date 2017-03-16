@@ -9,6 +9,7 @@ function onOpen() {
     ui.createMenu('Spreadsheet Cleanup')
     .addItem('Show Sheets', 'showSheets')
     .addItem('Hide Sheets', 'hideSheets')
+    .addItem('Delete Sheets All Sheets From Sheet #', 'deleteAllSheetsFrom')
     .addItem('Delete Sheets', 'deleteSheets')
     .addItem('Copy Sheets', 'copySheets') 
     .addToUi(); 
@@ -22,8 +23,10 @@ function onOpen() {
     var items = [
       {name: 'Hide Sheets', functionName: 'hideSheets'},
       {name: 'Show Sheets', functionName: 'showSheets'},
+      {name: 'Delete Sheets All Sheets From Sheet #', functionName: 'deleteAllSheetsFrom'},
       {name: 'Delete Sheets', functionName: 'deleteSheets'},
       {name: 'Copy Sheets', functionName: 'copySheets'},
+      
     ];
       ss.addMenu('Spreadsheet Cleanup', items);
   }
@@ -31,10 +34,12 @@ function onOpen() {
       
 function deleteSheets() {
   var deleteSheetsContaining = Browser.inputBox("Delete sheets with names containing:"); 
+      deleteSheetsContaining = deleteSheetsContaining.toLowerCase();
     if (sheetMatch(deleteSheetsContaining)){
       for (var i = 0; i < sheetsCount; i++){
         var sheet = sheets[i]; 
         var sheetName = sheet.getName();
+        sheetName = sheetName.toLowerCase();
         Logger.log(sheetName);
       if (sheetName.indexOf(deleteSheetsContaining.toString()) !== -1){
         Logger.log("DELETE!");
@@ -45,6 +50,16 @@ function deleteSheets() {
     noMatchAlert();
   }
 }
+
+function deleteAllSheetsFrom() {
+  var deleteSheetsFrom = Browser.inputBox("Delete all sheet from sheet number:"); 
+      for (var i = deleteSheetsFrom -1 ; i < sheetsCount; i++)
+      {
+      
+          ss.deleteSheet(sheets[i]);
+      }       
+}
+
 
 function hideSheets() {
   var hideSheetsContaining = Browser.inputBox("Hide sheets with names containing:");
