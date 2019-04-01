@@ -118,7 +118,7 @@ function copySheets() {
 // determine if any sheets match the user input
 function sheetMatch(sheetMatch){
   for (var i = 0; i < sheetsCount; i++){
-    var sheetName = sheets[i].getName(); 
+    var sheetName = sheets[i].getName().toLowerCase(); 
     if (sheetName.indexOf(sheetMatch.toString()) !== -1){
       return true
     }
